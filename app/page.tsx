@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ShoppingCart, Plus, Minus, Star, Clock, MapPin, Phone, Utensils, Coffee } from "lucide-react"
 import Image from "next/image"
 
@@ -225,6 +225,12 @@ export default function RestaurantEcommerce() {
   const [cart, setCart] = useState<CartItem[]>([])
   const [activeCategory, setActiveCategory] = useState("all")
   const [diningOption, setDiningOption] = useState<"takeout" | "dinein">("takeout")
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  // Animation effect on page load
+  useEffect(() => {
+    setIsLoaded(true)
+  }, [])
 
   // Happy Hour: 4 PM - 7 PM
   const isHappyHour = () => {
@@ -295,9 +301,13 @@ export default function RestaurantEcommerce() {
   }
 
   return (
-    <div className="min-h-screen bg-orange-50 font-sans">
+    <div
+      className={`min-h-screen bg-orange-50 font-sans transition-all duration-1000 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+    >
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-amber-900/95 backdrop-blur supports-[backdrop-filter]:bg-amber-900/90 text-white">
+      <header
+        className={`sticky top-0 z-50 w-full border-b bg-amber-900/95 backdrop-blur supports-[backdrop-filter]:bg-amber-900/90 text-white transition-all duration-700 delay-200 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full"}`}
+      >
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold text-amber-100">DK ARTISTIC RESTO&BAR</h1>
@@ -390,13 +400,18 @@ export default function RestaurantEcommerce() {
                             <Button
                               variant="outline"
                               size="icon"
-                              className="h-8 w-8"
+                              className="h-8 w-8 bg-transparent"
                               onClick={() => removeFromCart(item.id)}
                             >
                               <Minus className="h-4 w-4" />
                             </Button>
                             <span className="w-8 text-center">{item.quantity}</span>
-                            <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => addToCart(item)}>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8 bg-transparent"
+                              onClick={() => addToCart(item)}
+                            >
                               <Plus className="h-4 w-4" />
                             </Button>
                           </div>
@@ -448,7 +463,9 @@ export default function RestaurantEcommerce() {
 
       {/* Happy Hour Alert */}
       {isHappyHour() && (
-        <Alert className="mx-4 mt-4 bg-orange-100 border-orange-300">
+        <Alert
+          className={`mx-4 mt-4 bg-orange-100 border-orange-300 transition-all duration-700 delay-300 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+        >
           <Clock className="h-4 w-4" />
           <AlertDescription className="font-medium text-orange-800">
             🎉 Happy Hour is ON! Get special prices on selected drinks until 7 PM!
@@ -457,19 +474,34 @@ export default function RestaurantEcommerce() {
       )}
 
       {/* Hero Section */}
-      <section className="relative h-[500px] bg-gradient-to-r from-amber-600 to-orange-600 bg-cover bg-center text-white text-center flex items-center justify-center">
+      <section
+        className={`relative h-[500px] bg-gradient-to-r from-amber-600 to-orange-600 bg-cover bg-center text-white text-center flex items-center justify-center transition-all duration-1000 delay-400 ${isLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+      >
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 space-y-6">
-          <h1 className="text-5xl md:text-6xl font-bold">DK ARTISTIC RESTO & BAR</h1>
-          <p className="text-xl md:text-2xl">Kigali's No.1 Street Food Haven in Masoro</p>
-          <Button onClick={scrollToMenu} className="bg-amber-700 hover:bg-amber-800 text-white text-lg px-8 py-3">
+          <h1
+            className={`text-5xl md:text-6xl font-bold transition-all duration-1000 delay-600 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          >
+            DK ARTISTIC RESTO & BAR
+          </h1>
+          <p
+            className={`text-xl md:text-2xl transition-all duration-1000 delay-700 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          >
+            Kigali's No.1 Street Food Haven in Masoro
+          </p>
+          <Button
+            onClick={scrollToMenu}
+            className={`bg-amber-700 hover:bg-amber-800 text-white text-lg px-8 py-3 transition-all duration-1000 delay-800 transform hover:scale-105 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          >
             Explore Menu
           </Button>
         </div>
       </section>
 
       {/* About Section */}
-      <section className="p-10 bg-white text-gray-800">
+      <section
+        className={`p-10 bg-white text-gray-800 transition-all duration-1000 delay-500 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+      >
         <div className="container max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6 text-amber-900">About Us</h2>
           <p className="text-lg leading-relaxed">
@@ -482,17 +514,21 @@ export default function RestaurantEcommerce() {
       </section>
 
       {/* Menu Section */}
-      <section id="menu-section" className="p-10 bg-orange-100">
+      <section
+        id="menu-section"
+        className={`p-10 bg-orange-100 transition-all duration-1000 delay-600 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+      >
         <div className="container">
           <h2 className="text-3xl font-bold mb-6 text-amber-900 text-center">Our Street Menu</h2>
 
           <Tabs value={activeCategory} onValueChange={setActiveCategory} className="w-full">
             <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 bg-amber-100 mb-8">
-              {categories.map((category) => (
+              {categories.map((category, index) => (
                 <TabsTrigger
                   key={category.id}
                   value={category.id}
-                  className="data-[state=active]:bg-amber-700 data-[state=active]:text-white"
+                  className={`data-[state=active]:bg-amber-700 data-[state=active]:text-white transition-all duration-500 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                  style={{ transitionDelay: `${700 + index * 100}ms` }}
                 >
                   {category.name}
                 </TabsTrigger>
@@ -501,10 +537,11 @@ export default function RestaurantEcommerce() {
 
             <TabsContent value={activeCategory}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredItems.map((item) => (
+                {filteredItems.map((item, index) => (
                   <Card
                     key={item.id}
-                    className="overflow-hidden border-amber-200 hover:shadow-lg transition-shadow bg-white"
+                    className={`overflow-hidden border-amber-200 hover:shadow-lg transition-all duration-500 bg-white transform hover:scale-105 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                    style={{ transitionDelay: `${800 + index * 100}ms` }}
                   >
                     <div className="relative">
                       <Image
@@ -512,13 +549,13 @@ export default function RestaurantEcommerce() {
                         alt={item.name}
                         width={400}
                         height={250}
-                        className="w-full h-48 object-cover"
+                        className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
                       />
                       <div className="absolute top-2 left-2 flex gap-2">
-                        {item.popular && <Badge className="bg-orange-500">Popular</Badge>}
+                        {item.popular && <Badge className="bg-orange-500 animate-pulse">Popular</Badge>}
                         {item.spicy && <Badge className="bg-red-500">🌶️ Spicy</Badge>}
                         {isHappyHour() && item.happyHourPrice && (
-                          <Badge className="bg-yellow-500 text-black">Happy Hour</Badge>
+                          <Badge className="bg-yellow-500 text-black animate-bounce">Happy Hour</Badge>
                         )}
                       </div>
                     </div>
@@ -565,7 +602,7 @@ export default function RestaurantEcommerce() {
                               variant="outline"
                               size="icon"
                               onClick={() => removeFromCart(item.id)}
-                              className="border-amber-300 hover:bg-amber-100"
+                              className="border-amber-300 hover:bg-amber-100 transition-all duration-200 hover:scale-110"
                             >
                               <Minus className="h-4 w-4" />
                             </Button>
@@ -574,7 +611,7 @@ export default function RestaurantEcommerce() {
                               variant="outline"
                               size="icon"
                               onClick={() => addToCart(item)}
-                              className="border-amber-300 hover:bg-amber-100"
+                              className="border-amber-300 hover:bg-amber-100 transition-all duration-200 hover:scale-110"
                             >
                               <Plus className="h-4 w-4" />
                             </Button>
@@ -584,7 +621,10 @@ export default function RestaurantEcommerce() {
                           </span>
                         </div>
                       ) : (
-                        <Button className="w-full bg-amber-700 hover:bg-amber-800" onClick={() => addToCart(item)}>
+                        <Button
+                          className="w-full bg-amber-700 hover:bg-amber-800 transition-all duration-200 hover:scale-105"
+                          onClick={() => addToCart(item)}
+                        >
                           Add to Cart
                         </Button>
                       )}
@@ -598,23 +638,28 @@ export default function RestaurantEcommerce() {
       </section>
 
       {/* Gallery Section */}
-      <section className="p-10 bg-white">
+      <section
+        className={`p-10 bg-white transition-all duration-1000 delay-700 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+      >
         <div className="container">
           <h2 className="text-3xl font-bold mb-6 text-amber-900 text-center">Gallery</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {galleryImages.map((image) => (
+            {galleryImages.map((image, index) => (
               <div
                 key={image.id}
-                className="relative bg-gray-200 h-40 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group"
+                className={`relative bg-gray-200 h-40 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-500 cursor-pointer group transform hover:scale-105 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                style={{ transitionDelay: `${900 + index * 100}ms` }}
               >
                 <Image
                   src={image.src || "/placeholder.svg"}
                   alt={image.alt}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="text-white font-medium text-sm text-center px-2">{image.title}</span>
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                  <span className="text-white font-medium text-sm text-center px-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    {image.title}
+                  </span>
                 </div>
               </div>
             ))}
@@ -623,11 +668,16 @@ export default function RestaurantEcommerce() {
       </section>
 
       {/* Opening Hours & Contact */}
-      <section className="p-10 bg-orange-100 text-gray-800">
+      <section
+        className={`p-10 bg-orange-100 text-gray-800 transition-all duration-1000 delay-800 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+      >
         <div className="container">
           <h2 className="text-3xl font-bold mb-6 text-amber-900 text-center">Find Us</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div className="flex items-start space-x-3 text-center md:text-left">
+            <div
+              className={`flex items-start space-x-3 text-center md:text-left transition-all duration-700 ${isLoaded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}
+              style={{ transitionDelay: "1000ms" }}
+            >
               <MapPin className="text-amber-700 mt-1 flex-shrink-0" />
               <div>
                 <p className="font-semibold text-amber-900">Location</p>
@@ -635,7 +685,10 @@ export default function RestaurantEcommerce() {
                 <p className="text-sm text-gray-600">Easy to find, great parking</p>
               </div>
             </div>
-            <div className="flex items-start space-x-3 text-center md:text-left">
+            <div
+              className={`flex items-start space-x-3 text-center md:text-left transition-all duration-700 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+              style={{ transitionDelay: "1100ms" }}
+            >
               <Clock className="text-amber-700 mt-1 flex-shrink-0" />
               <div>
                 <p className="font-semibold text-amber-900">Opening Hours</p>
@@ -643,7 +696,10 @@ export default function RestaurantEcommerce() {
                 <p className="text-sm text-orange-600 font-medium">Happy Hour: 4:00 PM - 7:00 PM</p>
               </div>
             </div>
-            <div className="flex items-start space-x-3 text-center md:text-left">
+            <div
+              className={`flex items-start space-x-3 text-center md:text-left transition-all duration-700 ${isLoaded ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
+              style={{ transitionDelay: "1200ms" }}
+            >
               <Phone className="text-amber-700 mt-1 flex-shrink-0" />
               <div>
                 <p className="font-semibold text-amber-900">Contact</p>
@@ -656,10 +712,15 @@ export default function RestaurantEcommerce() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-amber-900 text-amber-100 py-12">
+      <footer
+        className={`bg-amber-900 text-amber-100 py-12 transition-all duration-1000 delay-900 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+      >
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
+            <div
+              className={`transition-all duration-700 ${isLoaded ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}
+              style={{ transitionDelay: "1300ms" }}
+            >
               <h3 className="font-bold text-lg mb-4">DK ARTISTIC RESTO&BAR</h3>
               <p className="text-amber-200 mb-4">
                 Serving the best street food and craft drinks in Kigali since 2020. Fast, fresh, and full of flavor!
@@ -674,7 +735,10 @@ export default function RestaurantEcommerce() {
               </div>
             </div>
 
-            <div>
+            <div
+              className={`transition-all duration-700 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+              style={{ transitionDelay: "1400ms" }}
+            >
               <h4 className="font-semibold mb-4">Contact Info</h4>
               <div className="space-y-2 text-sm text-amber-200">
                 <div className="flex items-center space-x-2">
@@ -693,13 +757,16 @@ export default function RestaurantEcommerce() {
               </div>
             </div>
 
-            <div>
+            <div
+              className={`transition-all duration-700 ${isLoaded ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}
+              style={{ transitionDelay: "1500ms" }}
+            >
               <h4 className="font-semibold mb-4">Quick Links</h4>
               <div className="space-y-2 text-sm text-amber-200">
-                <div>About Us</div>
-                <div>Menu</div>
-                <div>Gallery</div>
-                <div>Contact</div>
+                <div className="hover:text-orange-300 transition-colors cursor-pointer">About Us</div>
+                <div className="hover:text-orange-300 transition-colors cursor-pointer">Menu</div>
+                <div className="hover:text-orange-300 transition-colors cursor-pointer">Gallery</div>
+                <div className="hover:text-orange-300 transition-colors cursor-pointer">Contact</div>
                 <button
                   onClick={() => (window.location.href = "/admin")}
                   className="text-left hover:text-orange-300 transition-colors cursor-pointer"
@@ -712,7 +779,12 @@ export default function RestaurantEcommerce() {
 
           <Separator className="my-8 bg-amber-700" />
 
-          <div className="text-center text-sm text-amber-200">© 2024 DK ARTISTIC RESTO&BAR. All rights reserved.</div>
+          <div
+            className={`text-center text-sm text-amber-200 transition-all duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
+            style={{ transitionDelay: "1600ms" }}
+          >
+            © 2024 DK ARTISTIC RESTO&BAR. All rights reserved.
+          </div>
         </div>
       </footer>
     </div>

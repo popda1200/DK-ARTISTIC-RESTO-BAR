@@ -18,6 +18,7 @@ import {
   Download,
   Copy,
   ExternalLink,
+  MapPin,
 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -1840,8 +1841,8 @@ export default function AdminDashboard() {
                           <div className="flex items-center space-x-2">
                             <Switch
                               checked={user.isActive}
-                              onCheckedChange={() => toggleUserStatus(user.username)}
-                              disabled={user.username === currentUser?.username}
+                              onChange={(e) => setEditingUser({ ...editingUser, isActive: e.target.value })}
+                              disabled={editingUser.username === currentUser?.username}
                             />
                             <span className="text-sm">{user.isActive ? "Active" : "Inactive"}</span>
                           </div>
@@ -2040,12 +2041,26 @@ export default function AdminDashboard() {
 
                   <div>
                     <Label htmlFor="restaurant-address">Address</Label>
-                    <Input
-                      id="restaurant-address"
-                      value={restaurantSettings.address}
-                      onChange={(e) => setRestaurantSettings({ ...restaurantSettings, address: e.target.value })}
-                      disabled={!editingSettings}
-                    />
+                    <div className="flex space-x-2">
+                      <Input
+                        id="restaurant-address"
+                        value={restaurantSettings.address}
+                        onChange={(e) => setRestaurantSettings({ ...restaurantSettings, address: e.target.value })}
+                        disabled={!editingSettings}
+                        className="flex-1"
+                      />
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          const encodedAddress = encodeURIComponent(restaurantSettings.address)
+                          window.open(`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`, '_blank')
+                        }}
+                        className="flex-shrink-0"
+                      >
+                        <MapPin className="h-4 w-4 mr-2" />
+                        View on Maps
+                      </Button>
+                    </div>
                   </div>
 
                   {/* Logo and Cover Image */}
@@ -2767,7 +2782,6 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 </div>
-              </div>
 
               {/* Basic Information */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -3392,7 +3406,7 @@ export default function AdminDashboard() {
                 <Label htmlFor="new-role">Role</Label>
                 <Select
                   value={newUser.role || "staff"}
-                  onValueChange={(value) => setNewUser({ ...newUser, role: value as "admin" | "manager" | "staff" })}
+                  onChange={(e) => setNewUser({ ...newUser, role: e.target.value as "admin" | "manager" | "staff" })}
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -3407,7 +3421,7 @@ export default function AdminDashboard() {
               <div className="flex items-center space-x-2 pt-6">
                 <Switch
                   checked={newUser.isActive || true}
-                  onCheckedChange={(checked) => setNewUser({ ...newUser, isActive: checked })}
+                  onChange={(e) => setNewUser({ ...newUser, isActive: e.target.value })}
                 />
                 <Label>Active</Label>
               </div>
@@ -3533,8 +3547,8 @@ export default function AdminDashboard() {
                   <Label htmlFor="edit-role">Role</Label>
                   <Select
                     value={editingUser.role}
-                    onValueChange={(value) =>
-                      setEditingUser({ ...editingUser, role: value as "admin" | "manager" | "staff" })
+                    onChange={(e) =>
+                      setEditingUser({ ...editingUser, role: e.target.value as "admin" | "manager" | "staff" })
                     }
                   >
                     <SelectTrigger>
@@ -3550,7 +3564,7 @@ export default function AdminDashboard() {
                 <div className="flex items-center space-x-2 pt-6">
                   <Switch
                     checked={editingUser.isActive}
-                    onCheckedChange={(checked) => setEditingUser({ ...editingUser, isActive: checked })}
+                    onChange={(e) => setEditingUser({ ...editingUser, isActive: e.target.value })}
                     disabled={editingUser.username === currentUser?.username}
                   />
                   <Label>Active</Label>
@@ -3571,5 +3585,5 @@ export default function AdminDashboard() {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  )\
 }
