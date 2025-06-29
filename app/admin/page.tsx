@@ -2053,7 +2053,7 @@ export default function AdminDashboard() {
                         variant="outline"
                         onClick={() => {
                           const encodedAddress = encodeURIComponent(restaurantSettings.address)
-                          window.open(`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`, '_blank')
+                          window.open(`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`, "_blank")
                         }}
                         className="flex-shrink-0"
                       >
@@ -2782,6 +2782,7 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 </div>
+              </div>
 
               {/* Basic Information */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -3585,5 +3586,5 @@ export default function AdminDashboard() {
         </DialogContent>
       </Dialog>
     </div>
-  )\
+  )
 }
